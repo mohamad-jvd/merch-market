@@ -498,7 +498,7 @@
                                                                     <div class="content-expert-evaluation-positive">
                                                                         <span>نقطه قوت</span>
                                                                         <ul>
-                                                                            {% if c.positive_points and c.positive_points.strip() %}
+                                                                            {% if c.positive_points %}
                                                                                 <li>{{ c.positive_points }}</li>
                                                                             {% endif %}
                                                                         </ul>
@@ -508,7 +508,7 @@
                                                                     <div class="content-expert-evaluation-negative">
                                                                         <span>نقطه ضعف</span>
                                                                         <ul>
-                                                                            {% if c.negative_points and c.negative_points.strip() %}
+                                                                            {% if c.negative_points %}
                                                                                 <li>{{ c.negative_points  }}</li>
                                                                             {% endif %}
                                                                         </ul>
