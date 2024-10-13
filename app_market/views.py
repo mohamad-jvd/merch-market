@@ -4,6 +4,7 @@ from django.db.models import Q
 from app_social.models import Comment,Question
 from app_social.forms import CommentForm,QuestionForm,AnswerForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def index(request):
     context = {
@@ -99,7 +100,7 @@ def product_comment(request, id):
         negative_points = request.POST.get('negative_points')
 
         if not positive_points or not negative_points:
-            form.add_error(None, "لطفا همه مشخصات را پر کنید.")
+            messages.error(request, 'لطفاً همه مشخصات را پر کنید.')  # پیام خطای جدید
         elif form.is_valid():
             comment = form.save(commit=False)
             comment.product = product
