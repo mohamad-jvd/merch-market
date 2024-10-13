@@ -12,8 +12,8 @@ class Comment(models.Model):
     text = models.TextField()
     suggest = models.BooleanField(null=True)
     create_date = models.DateTimeField(auto_now_add=True)
-    positive_points = models.TextField(null=True , blank=True)
-    negative_points = models.TextField(null=True , blank=True)
+    positive_points = models.TextField(null=True)
+    negative_points = models.TextField(null=True)
     helpful_count = models.PositiveIntegerField(default=0)
     not_helpful_count = models.PositiveIntegerField(default=0)
 
