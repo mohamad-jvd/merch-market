@@ -95,18 +95,17 @@ def product_comment(request, id):
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        if form.is_valid():
-            positive_points = form.cleaned_data.get('positive_points')
-            negative_points = form.cleaned_data.get('negative_points')
-            
-            if not positive_points or not negative_points:
-                form.add_error(None, "لطفاً همه مشخصات را پر کنید.") 
-            else:
-                comment = form.save(commit=False)
-                comment.product = product
-                comment.user = request.user
-                comment.save()
-                return redirect('app_market:product_detail', id=product.id)
+        positive_points = request.POST.get('positive_points')
+        negative_points = request.POST.get('negative_points')
+
+        if not positive_points or not negative_points:
+            form.add_error(None, "لطفا همه مشخصات را پر کنید.")
+        elif form.is_valid():
+            comment = form.save(commit=False)
+            comment.product = product
+            comment.user = request.user
+            comment.save()
+            return redirect('app_market:product_detail', id=product.id)
     else:
         form = CommentForm()
 
