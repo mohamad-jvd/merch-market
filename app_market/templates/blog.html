@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fa">
+
+<!-- Start main-content -->
+    <main class="main-content dt-sl mb-3">
+        <div class="container main-container">
+            <div class="row mt-5 pt-5">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                    <div class="row">
+                        {% for item in blog %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="post-card">
+                                <div class="post-thumbnail" style="left: 0;" >
+                                    <a href="{% url 'app_market:blogdetail' %}">
+                                        <img src="{{ item.images.first.image.url }}" alt="">
+                                    </a>
+                                    <span class="post-tag">مقاله</span>
+                                </div>
+                                <h5>
+                                <div class="post-title" style="text-align: center;" >
+                                    <a href="{% url 'app_market:blogdetail' %}">
+                                        {{item.title}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+<!-- End main-content -->
+        
+{% endblock content %}
