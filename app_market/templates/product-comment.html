@@ -4,11 +4,6 @@
 {% block content %}
 
 <!DOCTYPE html>
-{% if form.non_field_errors %}
-    <div  style="text-align: center; color: red;" class="alert alert-danger">
-        {{ form.non_field_errors }}
-    </div>
-{% endif %}
     <!-- Start main-content -->
     <main class="main-content dt-sl mb-3">
         <div class="container main-container">
@@ -175,6 +170,11 @@
                                         <button class="btn btn btn-primary px-3" type="submit">
                                             ثبت نظر
                                         </button>
+                                        {% if form.non_field_errors %}
+                                            <div  style="text-align: center; color: red;" class="alert alert-danger">
+                                                {{ form.non_field_errors }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </form>
