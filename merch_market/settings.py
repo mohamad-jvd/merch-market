@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'merch_market.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': '/home/m0hamadjvd/merch_market/db.sqlite3',
     }
 }
 
