@@ -136,3 +136,8 @@ STATIC_ROOT = 'static'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
+
+import os
+
+MEDIA_URL = '/store/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'store/images/')
