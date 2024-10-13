@@ -100,7 +100,8 @@ def product_comment(request, id):
         negative_points = request.POST.get('negative_points')
 
         if not positive_points or not negative_points:
-            messages.error(request, 'لطفاً همه مشخصات را پر کنید.')  # پیام خطای جدید
+            messages.error(request, 'لطفاً همه مشخصات را پر کنید.')
+            form.add_error(None, "لطفاً همه مشخصات را پر کنید.")  
         elif form.is_valid():
             comment = form.save(commit=False)
             comment.product = product
