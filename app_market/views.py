@@ -107,7 +107,8 @@ def product_comment(request, id):
     return render(request, 'product-comment.html', {
         'product': product,
         'comments': comments,
-        'form': form
+        'form': form,
+        'category': Category.objects.all()
     })
         
 def blog(request):
