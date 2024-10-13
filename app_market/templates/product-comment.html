@@ -167,17 +167,11 @@
                                         <p class="d-block">با “ثبت نظر” موافقت خود را با <a href="#"
                                                 class="border-bottom-dt" target="_blank">قوانین
                                                 انتشار محتوا</a> در مرچ مارکت اعلام می‌کنم.
-                                            {% if form.errors %}
-                                                <div class="errors">
-                                                    <ul>
-                                                        {% for error in form.errors.values %}
-                                                            {% for e in error %}
-                                                                <li style="text-align: center; color: red;">{{ e }}</li>
-                                                            {% endfor %}
-                                                        {% endfor %}
-                                                    </ul>
-                                                </div>
-                                            {% endif %}
+                                                {% if form.non_field_errors %}
+                                                    <div class="alert alert-danger">
+                                                        {{ form.non_field_errors }}
+                                                    </div>
+                                                {% endif %}
                                             </p>
                                         <button class="btn btn btn-primary px-3" type="submit">
                                             ثبت نظر
