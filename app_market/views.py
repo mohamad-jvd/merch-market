@@ -112,15 +112,16 @@ def product_comment(request, id):
         
 def blog(request):
     context = {
-        'blog':Blog.objects.all()  
-         
+        'blog':Blog.objects.all(),  
+        'category': Category.objects.all()
     }
    
     return render(request, 'blog.html', context)
 
 def blog_detail(request):
      context = {
-          'blog_detail':Blog_detail.objects.all()
+          'blog_detail':Blog_detail.objects.all(),
+          'category': Category.objects.all()
      }
      return render(request,'blog_detail.html',context)
 
