@@ -14,7 +14,6 @@ def cart(request):
     item_count = basket.basketitem_set.count() if basket else 0
     total_price = 0
 
-    # نمایش صفحه سبد خرید خالی در صورت نبودن آیتم
     if item_count == 0:
         return render(request, 'cart-empty.html', {'basket': basket, 'item_count': item_count, 'category': Category.objects.all()})
 
