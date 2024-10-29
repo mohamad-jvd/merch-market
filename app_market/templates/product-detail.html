@@ -53,223 +53,224 @@
                                     <h1> {{ product.name_fa }} </h1>
                                     <h3> {{ product.name_en }} </h3>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="product-variant dt-sl">
-                                            <div
-                                                class="section-title text-sm-title title-wide no-after-title-wide mb-0">
-                                                <h2>انتخاب رنگ:</h2>
-                                            </div>
-                                            <ul class="product-variants float-right ml-3">
-                                                {% for color in product.color.all %}
-                                                <li class="ui-variant">
-                                                    <label class="ui-variant ui-variant--color">
-                                                        <span class="ui-variant-shape"
-                                                            style="background-color: {{ color.hex_code }}"></span>
-                                                        <input type="radio" value="1" name="color"
-                                                            class="variant-selector" checked>
-                                                        <span class="ui-variant--check">{{ color.color }}</span>
-                                                    </label>
-                                                </li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                        <div class="product-params dt-sl">
-                                            <ul data-title="ویژگی‌های محصول">
-                                                {% for features in product.features.all %}
-                                                <li>
-                                                    <span>{{ features.text }}: </span>
-                                                    <span>  {{ features.answer }} </span>
-                                                </li>
-                                                {% endfor %}
-                                            </ul>
-                                            {% if forloop.counter == 5 %}
-                                            <div class="sum-more">
-                                                <span class="show-more btn-link-border">
-                                                    + موارد بیشتر
-                                                </span>
-                                                <span class="show-less btn-link-border">
-                                                    - بستن
-                                                </span>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="product-guaranteed">
-                                        </div>
-                                        <div class="product-summary">
-                                            <nav id="stack-menu">
-                                                <ul>
-                                                    <li>
-                                                        <ul class="product-seller-box--shadowed">
-                                                            <div class="product-info-box-body-wrapper">
-                                                                <div class="product-info-box-body">
-                                                                    <div class="product-info-box-row font-weight-bold">
-                                                                        <span class="seller-name">مرچ مارکت</span>
-                                                                    </div>
-                                                                    <div class="product-info-box-row">
-                                                                        عملکرد
-                                                                        <span
-                                                                            class="font-weight-bold u-text-big">۵</span>
-                                                                        از ۵
-                                                                        <div class="product-info-box-feedbacks">
-                                                                            <div class="product-feedback">
-                                                                                <div
-                                                                                    class="product-feedback-percent product-feedback-percent--green">
-                                                                                    ۱۰۰٪</div>
-                                                                                تامین به موقع
-                                                                            </div>
-                                                                            <div class="product-feedback">
-                                                                                <div
-                                                                                    class="product-feedback-percent product-feedback-percent--green">
-                                                                                    ۱۰۰٪</div>
-                                                                                تعهد ارسال
-                                                                            </div>
-                                                                            <div class="product-feedback">
-                                                                                <div
-                                                                                    class="product-feedback-percent product-feedback-percent--green">
-                                                                                    ۹۹.۹٪</div>
-                                                                                بدون مرجوعی
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-info-box-row">
-                                                                        <span
-                                                                            class="font-weight-bold u-text-big">۸۶.۶٪</span>
-                                                                        رضایت از کالا
-                                                                        <span class="text-secondary">
-                                                                            (<span>۲۱</span> نفر)
-                                                                        </span>
-                                                                        <div class="product-info-box-v-feedbacks">
-                                                                            <div class="product-v-feedback">
-                                                                                <div class="product-v-feedback-label">
-                                                                                    کاملا راضی
-                                                                                </div>
-                                                                                <div class="product-v-feedback-bar">
-                                                                                    <div style="width: 52.38%;"
-                                                                                        class="product-v-feedback-bar product-v-feedback-bar--very-green">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="product-v-feedback-percent">
-                                                                                    ۵۲٪</div>
-                                                                            </div>
-                                                                            <div class="product-v-feedback">
-                                                                                <div class="product-v-feedback-label">
-                                                                                    راضی
-                                                                                </div>
-                                                                                <div class="product-v-feedback-bar">
-                                                                                    <div style="width: 33.33%;"
-                                                                                        class="product-v-feedback-bar product-v-feedback-bar--green">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="product-v-feedback-percent">
-                                                                                    ۳۳٪</div>
-                                                                            </div>
-                                                                            <div class="product-v-feedback">
-                                                                                <div class="product-v-feedback-label">
-                                                                                    نظری ندارم
-                                                                                </div>
-                                                                                <div class="product-v-feedback-bar">
-                                                                                    <div style="width: 9.52%;"
-                                                                                        class="product-v-feedback-bar product-v-feedback-bar--yellow">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="product-v-feedback-percent">
-                                                                                    ۱۰٪</div>
-                                                                            </div>
-                                                                            <div class="product-v-feedback">
-                                                                                <div class="product-v-feedback-label">
-                                                                                    ناراضی
-                                                                                </div>
-                                                                                <div class="product-v-feedback-bar">
-                                                                                    <div style="width: 4.76%;"
-                                                                                        class="product-v-feedback-bar product-v-feedback-bar--orange">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="product-v-feedback-percent">
-                                                                                    ۵٪</div>
-                                                                            </div>
-                                                                            <div class="product-v-feedback">
-                                                                                <div class="product-v-feedback-label">
-                                                                                    کاملا ناراضی
-                                                                                </div>
-                                                                                <div class="product-v-feedback-bar">
-                                                                                    <div style="width: 0%;"
-                                                                                        class="product-v-feedback-bar product-v-feedback-bar--red">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="product-v-feedback-percent">
-                                                                                    ۰٪</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </ul>
+                                <form action="{% url 'app_market:add_to_cart' product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="product-variant dt-sl">
+                                                <div
+                                                    class="section-title text-sm-title title-wide no-after-title-wide mb-0">
+                                                    <h2>انتخاب رنگ:</h2>
+                                                </div>
+                                                <ul class="product-variants float-right ml-3">
+                                                    {% for color in product.color.all %}
+                                                    <li class="ui-variant">
+                                                        <label class="ui-variant ui-variant--color">
+                                                            <span class="ui-variant-shape" style="background-color: {{ color.hex_code }}"></span>
+                                                            <input type="radio" value="{{ color.id }}" name="color" class="variant-selector" checked>
+                                                            <span class="ui-variant--check">{{ color.color }}</span>
+                                                        </label>
                                                     </li>
-                                                    <li>
-                                                        <a>
-                                                            <i class="far fa-shield-check"></i>
-                                                            گارانتی ۱۸ ماهه مرچ مارکت
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="far fa-box-check product-delivery-warehouse"></i>
-                                                            موجود در انبار مرچ مارکت
-                                                        </a>
-                                                        <ul class="product-seller-box--shadowed">
-                                                            <div class="product-info-box-body-wrapper">
-                                                                <div class="product-info-box-body">
-                                                                    <div class="shipment-info-box-row">
-                                                                        <div class="font-weight-bold">
-                                                                            <span>
-                                                                                آماده ارسال
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="u-text-spaced">
-                                                                            این کالا در انبار مرچ مارکت موجود و آماده
-                                                                            پردازش است.
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </ul>
-                                                    </li>
+                                                    {% endfor %}
                                                 </ul>
-                                                <div class="product-seller-row product-seller-row--price">
-                                                    <div class="product-seller-price-info">
-                                                        {% if product.discount %}
-                                                            <div class="product-seller-price-prev" >
-                                                                {{ product.price|intcomma }} 
-                                                            </div>
-                                                            <div class="product-seller-price-off" style="background:#ff9800;">
-                                                                {{product.discount}}٪
-                                                            </div>
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="product-seller-price-real">
-                                                        <div class="product-seller-price-raw" style="color:#ff9800;">{{ product.discounted_price|intcomma }} </div>
-                                                        تومان
-                                                    </div>
-                                                    <div
-                                                        class="product-additional-item product-additional-item--no-icon">
-                                                        <span>{{product.discount}}٪</span>&nbsp; درصد تخفیف خورده است.
-                                                    </div>
+                                            </div>
+                                            <div class="product-params dt-sl">
+                                                <ul data-title="ویژگی‌های محصول">
+                                                    {% for features in product.features.all %}
+                                                    <li>
+                                                        <span>{{ features.text }}: </span>
+                                                        <span>  {{ features.answer }} </span>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                {% if forloop.counter == 5 %}
+                                                <div class="sum-more">
+                                                    <span class="show-more btn-link-border">
+                                                        + موارد بیشتر
+                                                    </span>
+                                                    <span class="show-less btn-link-border">
+                                                        - بستن
+                                                    </span>
                                                 </div>
-                                                <div class="product-seller-row product-seller-row--add-to-cart">
-                                                    <a href="" class="btn-add-to-cart btn-add-to-cart--full-width" style="background-color:#ff9800;" >
-                                                        <span class="btn-add-to-cart-txt">افزودن به سبد خرید</span>
-                                                    </a>
-                                                    <div class="product-seller-digiclub">
-                                                        <img src="./assets/img/digiclub.png" alt="">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="product-guaranteed">
+                                            </div>
+                                            <div class="product-summary">
+                                                <nav id="stack-menu">
+                                                    <ul>
+                                                        <li>
+                                                            <ul class="product-seller-box--shadowed">
+                                                                <div class="product-info-box-body-wrapper">
+                                                                    <div class="product-info-box-body">
+                                                                        <div class="product-info-box-row font-weight-bold">
+                                                                            <span class="seller-name">مرچ مارکت</span>
+                                                                        </div>
+                                                                        <div class="product-info-box-row">
+                                                                            عملکرد
+                                                                            <span
+                                                                                class="font-weight-bold u-text-big">۵</span>
+                                                                            از ۵
+                                                                            <div class="product-info-box-feedbacks">
+                                                                                <div class="product-feedback">
+                                                                                    <div
+                                                                                        class="product-feedback-percent product-feedback-percent--green">
+                                                                                        ۱۰۰٪</div>
+                                                                                    تامین به موقع
+                                                                                </div>
+                                                                                <div class="product-feedback">
+                                                                                    <div
+                                                                                        class="product-feedback-percent product-feedback-percent--green">
+                                                                                        ۱۰۰٪</div>
+                                                                                    تعهد ارسال
+                                                                                </div>
+                                                                                <div class="product-feedback">
+                                                                                    <div
+                                                                                        class="product-feedback-percent product-feedback-percent--green">
+                                                                                        ۹۹.۹٪</div>
+                                                                                    بدون مرجوعی
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="product-info-box-row">
+                                                                            <span
+                                                                                class="font-weight-bold u-text-big">۸۶.۶٪</span>
+                                                                            رضایت از کالا
+                                                                            <span class="text-secondary">
+                                                                                (<span>۲۱</span> نفر)
+                                                                            </span>
+                                                                            <div class="product-info-box-v-feedbacks">
+                                                                                <div class="product-v-feedback">
+                                                                                    <div class="product-v-feedback-label">
+                                                                                        کاملا راضی
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-bar">
+                                                                                        <div style="width: 52.38%;"
+                                                                                            class="product-v-feedback-bar product-v-feedback-bar--very-green">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-percent">
+                                                                                        ۵۲٪</div>
+                                                                                </div>
+                                                                                <div class="product-v-feedback">
+                                                                                    <div class="product-v-feedback-label">
+                                                                                        راضی
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-bar">
+                                                                                        <div style="width: 33.33%;"
+                                                                                            class="product-v-feedback-bar product-v-feedback-bar--green">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-percent">
+                                                                                        ۳۳٪</div>
+                                                                                </div>
+                                                                                <div class="product-v-feedback">
+                                                                                    <div class="product-v-feedback-label">
+                                                                                        نظری ندارم
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-bar">
+                                                                                        <div style="width: 9.52%;"
+                                                                                            class="product-v-feedback-bar product-v-feedback-bar--yellow">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-percent">
+                                                                                        ۱۰٪</div>
+                                                                                </div>
+                                                                                <div class="product-v-feedback">
+                                                                                    <div class="product-v-feedback-label">
+                                                                                        ناراضی
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-bar">
+                                                                                        <div style="width: 4.76%;"
+                                                                                            class="product-v-feedback-bar product-v-feedback-bar--orange">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-percent">
+                                                                                        ۵٪</div>
+                                                                                </div>
+                                                                                <div class="product-v-feedback">
+                                                                                    <div class="product-v-feedback-label">
+                                                                                        کاملا ناراضی
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-bar">
+                                                                                        <div style="width: 0%;"
+                                                                                            class="product-v-feedback-bar product-v-feedback-bar--red">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="product-v-feedback-percent">
+                                                                                        ۰٪</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <a>
+                                                                <i class="far fa-shield-check"></i>
+                                                                گارانتی ۱۸ ماهه مرچ مارکت
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="far fa-box-check product-delivery-warehouse"></i>
+                                                                موجود در انبار مرچ مارکت
+                                                            </a>
+                                                            <ul class="product-seller-box--shadowed">
+                                                                <div class="product-info-box-body-wrapper">
+                                                                    <div class="product-info-box-body">
+                                                                        <div class="shipment-info-box-row">
+                                                                            <div class="font-weight-bold">
+                                                                                <span>
+                                                                                    آماده ارسال
+                                                                                </span>
+                                                                            </div>
+                                                                            <div class="u-text-spaced">
+                                                                                این کالا در انبار مرچ مارکت موجود و آماده
+                                                                                پردازش است.
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="product-seller-row product-seller-row--price">
+                                                        <div class="product-seller-price-info">
+                                                            {% if product.discount %}
+                                                                <div class="product-seller-price-prev" >
+                                                                    {{ product.price|intcomma }} 
+                                                                </div>
+                                                                <div class="product-seller-price-off" style="background:#ff9800;">
+                                                                    {{product.discount}}٪
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="product-seller-price-real">
+                                                            <div class="product-seller-price-raw" style="color:#ff9800;">{{ product.discounted_price|intcomma }} </div>
+                                                            تومان
+                                                        </div>
+                                                        <div
+                                                            class="product-additional-item product-additional-item--no-icon">
+                                                            <span>{{product.discount}}٪</span>&nbsp; درصد تخفیف خورده است.
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </nav>
+                                                    <div class="product-seller-row product-seller-row--add-to-cart">
+                                                        <button class="btn-add-to-cart btn-add-to-cart--full-width" style="background-color:#ff9800;" >
+                                                            <span class="btn-add-to-cart-txt">افزودن به سبد خرید</span>
+                                                        </button>
+                                                        <div class="product-seller-digiclub">
+                                                            <img src="./assets/img/digiclub.png" alt="">
+                                                        </div>
+                                                    </div>
+                                                </nav>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

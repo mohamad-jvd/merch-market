@@ -1,5 +1,5 @@
 from django.db import models
-from app_market.models import Product
+from app_market.models import Product,Color
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -25,6 +25,10 @@ class BasketItem(models.Model):
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     count = models.IntegerField()
+    color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True)  # اضافه کردن رنگ
+
+    def __str__(self):
+        return f"{self.product.name_fa} - {self.color.color} - {self.count}"
 
 class Transaction(models.Model):
     status = models.BooleanField(default=False, choices=TRANSACTION_CHOICES)

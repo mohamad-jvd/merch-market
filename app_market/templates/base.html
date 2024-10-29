@@ -122,10 +122,10 @@
                         </ul>
                         <div class="nav mr-auto">
                             <div class="nav-item cart--wrapper">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{% url "app_market:cart" %}">
                                     <span class="label-dropdown">سبد خرید</span>
                                     <i class="mdi mdi-cart-outline"></i>
-                                    <span class="count">2</span>
+                                    <span class="count">{{ item_count }}</span>
                                 </a>
                                 {% comment %} <div class="header-cart-info">
                                     <div class="header-cart-info-header">
@@ -250,16 +250,12 @@
                         <div class="side-menu">
                             <div class="logo-nav-res dt-sl text-center">
                                 <a href="#">
-                                    <img src="{% static '/assets/img/logo.png' %}" alt="">
+                                    <img src="{% static 'assets/img/logo.png' %}" alt="">
                                 </a>
                             </div>
                             <ul class="navbar-nav dt-sl">
-                                <li class="sub-menu">
-                                    {% include 'component/category.html' %}
-                                </li>
+                                {% include 'component/res-category.html' %}
                             </ul>
-                        </div>
-                        <div class="overlay-side-menu">
                         </div>
                     </nav>
                     <!-- End Main-Menu -->

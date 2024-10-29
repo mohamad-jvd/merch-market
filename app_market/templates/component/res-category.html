@@ -1,0 +1,27 @@
+{% for main_category in category %}
+    {% if main_category.parent == None %}
+        <li class="sub-menu">
+            <a href="{% url 'app_market:product_list_by_category' main_category.id %}">{{ main_category.name }}</a>
+
+            {% if main_category.sub_categories.exists %}
+                <ul>
+                    {% for sub_category in main_category.sub_categories.all %}
+                        <li class="sub-menu">
+                            <a href="{% url 'app_market:product_list_by_category' sub_category.id %}">{{ sub_category.name }}</a>
+
+                            {% if sub_category.sub_categories.exists %}
+                                <ul>
+                                    {% for sub_sub_category in sub_category.sub_categories.all %}
+                                        <li>
+                                            <a href="{% url 'app_market:product_list_by_category' sub_sub_category.id %}">{{ sub_sub_category.name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endfor %}

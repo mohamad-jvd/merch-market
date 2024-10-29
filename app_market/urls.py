@@ -16,7 +16,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import index,my_search,product_detail,blog,blog_detail,product_comment,product_list_by_category,qaview
+from .views import index,my_search,product_detail,blog,blog_detail,product_comment,product_list_by_category,qaview,cart,add_to_cart,shopping
 
 app_name = 'app_market'
 
@@ -29,4 +29,7 @@ urlpatterns = [
     path('blog/detail/', blog_detail , name='blogdetail' ),
     path('products/category/<int:category_id>/', product_list_by_category, name='product_list_by_category'),
     path('qa/', qaview , name='qa' ),
+    path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
+    path('cart/', cart, name='cart'), 
+    path('cart/1', shopping, name='shopping'),   
 ] 

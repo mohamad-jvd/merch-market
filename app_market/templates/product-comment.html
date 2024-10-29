@@ -138,30 +138,31 @@
                                     </div>
                                     <div class="col-12 mt-2 mb-2 px-0">
                                         <div class="product-offer-question">
-                                            <div
-                                                class="section-title text-sm-title title-wide mb-1 no-after-title-wide">
-                                                <h2 class="font-weight-bold">آیا خرید این محصول را به دوستانتان
-                                                    پیشنهاد می کنید؟</h2>
+                                            <div class="section-title text-sm-title title-wide mb-1 no-after-title-wide">
+                                                <h2 class="font-weight-bold">آدرس ارسال سفارش خود را انتخاب کنید:</h2>
                                             </div>
                                             <div class="product-offer-question-option">
-                                                <div class="custom-control custom-radio">
-                                                    <input id="customRadio1" class="custom-control-input"  type="radio" name="suggest" value="True" >
-                                                    <label class="custom-control-label" for="customRadio1">پیشنهاد
-                                                        می کنم</label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input id="customRadio2" class="custom-control-input" type="radio" name="suggest" value="False" >
-                                                    <label class="custom-control-label"
-                                                        for="customRadio2">خیر،پیشنهاد نمی کنم</label>
-                                                </div>
-                                                {% comment %} <div class="custom-control custom-radio">
-                                                    <input type="radio" id="customRadio3" name="customRadio"
-                                                        class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio3">نظری
-                                                        ندارم</label>
-                                                </div> {% endcomment %}
+                                                <form method="POST" action="{% url 'app_market:shopping' %}">
+                                                    {% csrf_token %}
+                                                    {% for address in addresses %}
+                                                        <div class="custom-control custom-radio">
+                                                            <input 
+                                                                id="addressRadio{{ address.id }}" 
+                                                                class="custom-control-input" 
+                                                                type="radio" 
+                                                                name="selected_address" 
+                                                                value="{{ address.id }}" 
+                                                                {% if address.id|stringformat:"s" == selected_address_id|stringformat:"s" %}checked{% endif %}
+                                                            >
+                                                            <label class="custom-control-label" for="addressRadio{{ address.id }}">
+                                                                {{ address.description }} - کد پستی: {{ address.postal_code }}
+                                                            </label>
+                                                        </div>
+                                                    {% endfor %}
+                                                    <button type="submit" class="btn btn-primary mt-3">ثبت آدرس</button>
+                                                </form>
                                             </div>
-                                        </div>
+                                        </div>                                        
                                     </div>
                                     <div class="col-12 px-0">
                                         <p class="d-block">با “ثبت نظر” موافقت خود را با <a href="#"

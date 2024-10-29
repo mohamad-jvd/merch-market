@@ -1,12 +1,52 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import Banner,Product,Category,Blog,Blog_detail
+from .models import Banner,Product,Category,Blog,Blog_detail,Color
 from django.db.models import Q
 from app_social.models import Comment,Question
 from app_social.forms import CommentForm,QuestionForm,AnswerForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from app_payment.models import Basket,BasketItem
+from app_account.models import Profile,Address
+
+@login_required
+def cart(request):
+    basket = Basket.objects.filter(user=request.user).first()
+    item_count = basket.basketitem_set.count() if basket else 0
+    total_price = 0
+
+    # نمایش صفحه سبد خرید خالی در صورت نبودن آیتم
+    if item_count == 0:
+        return render(request, 'cart-empty.html', {'basket': basket, 'item_count': item_count, 'category': Category.objects.all()})
+
+    if request.method == 'POST':
+        item_id = request.POST.get('item_id')
+        if item_id:
+            item = get_object_or_404(BasketItem, id=item_id, basket=basket)
+            item.delete()
+            return redirect('app_market:cart')
+
+    items = basket.basketitem_set.all() if basket else []
+    total_price = sum(item.product.discounted_price() * item.count for item in items)
+
+    context = {
+        'basket': basket,
+        'items': items,
+        'total_price': total_price,
+        'item_count': item_count,
+        'category': Category.objects.all(),
+    }
+    return render(request, 'cart.html', context)
+
+
 
 def index(request):
+    basket = None
+    item_count = 0
+
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user).first()
+        item_count = basket.basketitem_set.count() if basket else 0
+
     context = {
         'banner_images': Banner.objects.get(title='index_banner'),
         'products': Product.objects.all(),
@@ -15,9 +55,10 @@ def index(request):
         'footer_right': Product.objects.filter(footer_right=True),
         'footer_left': Product.objects.filter(footer_left=True),
         'footer_Middle': Product.objects.filter(footer_Middle=True),
-        'category': Category.objects.all()
+        'category': Category.objects.all(),
+        'item_count': item_count  
     }
-    return render(request , 'index.html', context)
+    return render(request, 'index.html', context)
 
 
 def my_search(request):
@@ -28,13 +69,17 @@ def my_search(request):
         serch_products = Product.objects.all()
     return render(request, 'search.html', {'serch_products': serch_products})
 
-@login_required
+
 def product_detail(request, id):
+    item_count = 0
     product = get_object_or_404(Product, id=id)
     question_count = Question.objects.filter(product=product).count()
     comments_count = Comment.objects.filter(product=product).count()
     comments = Comment.objects.filter(product=product)
     questions = Question.objects.filter(product=product)
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user).first()
+        item_count = basket.basketitem_set.count() if basket else 0
 
     question_form = QuestionForm()
 
@@ -53,6 +98,10 @@ def product_detail(request, id):
             return redirect('app_market:product_detail', id=product.id)
 
         elif 'question_text' in request.POST:
+            if not request.user.is_authenticated:
+                messages.warning(request, "برای ثبت سوال، لطفاً وارد شوید.")
+                return redirect('login')
+            
             question_form = QuestionForm(request.POST)
             if question_form.is_valid():
                 question = question_form.save(commit=False)
@@ -62,12 +111,15 @@ def product_detail(request, id):
                 return redirect('app_market:product_detail', id=product.id)
 
         elif 'answer_text' in request.POST:
+            if not request.user.is_authenticated:
+                messages.warning(request, "برای ثبت پاسخ، لطفاً وارد شوید.")
+                return redirect('login')
+            
             answer_form = AnswerForm(request.POST)
             if answer_form.is_valid():
                 question_id = request.POST.get('question_id')  
                 question = get_object_or_404(Question, id=question_id)
                 
-               
                 if not hasattr(question, 'answer'):
                     answer = answer_form.save(commit=False)
                     answer.question = question
@@ -82,14 +134,16 @@ def product_detail(request, id):
         'question_form': question_form,
         'question_count': question_count, 
         'comment_count': comments_count,
-        'category': Category.objects.all()
+        'category': Category.objects.all(),
+        'item_count': item_count
     }
 
     if product.count > 0:
         return render(request, 'product-detail.html', context)
     else:
         return render(request, 'single-product-not-available.html', context)
-        
+
+@login_required       
 def product_comment(request, id):
     product = Product.objects.get(id=id)
     comments = Comment.objects.all()
@@ -142,4 +196,45 @@ def product_list_by_category(request, category_id):
 def qaview(request):
     return render(request,'page-faq-category.html')
 
-        
+
+@login_required
+def add_to_cart(request, product_id):
+    if request.method == 'POST':
+        product = Product.objects.get(id=product_id)
+        color_id = request.POST.get('color')
+        color = Color.objects.get(id=color_id)
+
+        if request.user.is_authenticated:
+            basket = Basket.objects.filter(user=request.user).first()
+
+        if not basket:
+            basket = Basket.objects.create(user=request.user)
+
+        BasketItem.objects.create(basket=basket, product=product, color=color, count=1)
+
+    return redirect('app_market:cart')
+
+
+@login_required
+def shopping(request):
+    addresses = Address.objects.filter(user=request.user)
+    
+    basket = Basket.objects.filter(user=request.user).first()
+    item_count = basket.basketitem_set.count() if basket else 0
+    total_price = 0
+
+    items = basket.basketitem_set.all() if basket else []
+    total_price = sum(item.product.discounted_price() * item.count for item in items)
+    
+    if request.method == "POST":
+        messages.warning(request, "سایت متعلق به ارگان یا شاپی نمی‌باشد و امکان ادامه دادن سفارش نیست")
+
+    selected_address_id = request.session.get('selected_address_id')
+
+    context = {
+        'addresses': addresses,
+        'selected_address_id': selected_address_id,
+        'total_price': total_price, 
+        'item_count': item_count  
+    }
+    return render(request, 'shopping.html', context)
