@@ -61,12 +61,19 @@ def index(request):
 
 
 def my_search(request):
+    item_count = 0
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user).first()
+        item_count = basket.basketitem_set.count() if basket else 0
+
     query = request.GET.get('q')
     if query is not None:
-        serch_products = Product.objects.filter( Q(name_fa__icontains=query) | Q(name_en__icontains=query) )
+        serch_products = Product.objects.filter(Q(name_fa__icontains=query) | Q(name_en__icontains=query))
     else:
         serch_products = Product.objects.all()
-    return render(request, 'search.html', {'serch_products': serch_products})
+    
+    return render(request, 'search.html', {'serch_products': serch_products, 'item_count': item_count})
+
 
 
 def product_detail(request, id):
@@ -142,8 +149,13 @@ def product_detail(request, id):
     else:
         return render(request, 'single-product-not-available.html', context)
 
-@login_required       
+@login_required
 def product_comment(request, id):
+    item_count = 0
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user).first()
+        item_count = basket.basketitem_set.count() if basket else 0
+
     product = Product.objects.get(id=id)
     comments = Comment.objects.all()
 
@@ -154,7 +166,7 @@ def product_comment(request, id):
 
         if not positive_points or not negative_points:
             messages.error(request, 'لطفاً همه مشخصات را پر کنید.')
-            form.add_error(None, "لطفاً همه مشخصات را پر کنید.")  
+            form.add_error(None, "لطفاً همه مشخصات را پر کنید.")
         elif form.is_valid():
             comment = form.save(commit=False)
             comment.product = product
@@ -168,32 +180,56 @@ def product_comment(request, id):
         'product': product,
         'comments': comments,
         'form': form,
-        'category': Category.objects.all()
+        'category': Category.objects.all(),
+        'item_count': item_count
     })
         
 def blog(request):
+    item_count = 0
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user).first()
+        item_count = basket.basketitem_set.count() if basket else 0
+
     context = {
-        'blog':Blog.objects.all(),  
-        'category': Category.objects.all()
+        'blog': Blog.objects.all(),
+        'category': Category.objects.all(),
+        'item_count': item_count
     }
-   
+
     return render(request, 'blog.html', context)
 
 def blog_detail(request):
-     context = {
-          'blog_detail':Blog_detail.objects.all(),
-          'category': Category.objects.all()
-     }
-     return render(request,'blog_detail.html',context)
+    item_count = 0
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user).first()
+        item_count = basket.basketitem_set.count() if basket else 0
+
+    context = {
+        'blog_detail': Blog_detail.objects.all(),
+        'category': Category.objects.all(),
+        'item_count': item_count
+    }
+    return render(request, 'blog_detail.html', context)
 
 def product_list_by_category(request, category_id):
-    main_category= Category.objects.all()
+    item_count = 0
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user).first()
+        item_count = basket.basketitem_set.count() if basket else 0
+
+    main_category = Category.objects.all()
     category = get_object_or_404(Category, id=category_id)
     products = Product.objects.filter(Category=category)
-    return render(request, 'product_list.html', {'products_list': products, 'category_list': category , 'category':main_category})
+    return render(request, 'product_list.html', {'products_list': products, 'category_list': category, 'category': main_category, 'item_count': item_count})
+
 
 def qaview(request):
-    return render(request,'page-faq-category.html')
+    item_count = 0
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user).first()
+        item_count = basket.basketitem_set.count() if basket else 0
+
+    return render(request, 'page-faq-category.html', {'item_count': item_count})
 
 
 @login_required

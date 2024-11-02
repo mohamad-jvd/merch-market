@@ -6,6 +6,7 @@ from app_market.models import Category
 from .forms import UserForm, ProfileForm, AddressForm , ChangePasswordForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Address
+from app_payment.models import Basket
 
 def welcomeview(request):
     return render(request,'welcome.html')
@@ -45,25 +46,38 @@ def signupview(request):
 
     return render(request, 'register.html', {'form': form})
 
+@login_required
 def profileview(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    basket = Basket.objects.filter(user=request.user).first()
+    item_count = basket.basketitem_set.count() if basket else 0
+
     context = {
         'category': Category.objects.all(),
         'profile': profile,
+        'item_count': item_count
     }
-    return render(request,'profile.html',context)
+    return render(request, 'profile.html', context)
 
 @login_required
 def profile_editview(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    basket = Basket.objects.filter(user=request.user).first()
+    item_count = basket.basketitem_set.count() if basket else 0
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+        
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, 'اطلاعات پروفایل با موفقیت به‌روزرسانی شد.')
             return redirect('profile')
+        else:
+            messages.error(request, 'خطا در فرم! لطفاً مجدداً بررسی کنید.')
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=profile)
@@ -73,17 +87,23 @@ def profile_editview(request):
         'profile_form': profile_form,
         'profile': profile,
         'category': Category.objects.all(),
+        'item_count': item_count
     })
 
 @login_required
 def profile_address(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    basket = Basket.objects.filter(user=request.user).first()
+    item_count = basket.basketitem_set.count() if basket else 0
 
     if request.method == 'POST':
         if 'delete_address_id' in request.POST: 
             address_id = request.POST.get('delete_address_id')
             address = get_object_or_404(Address, id=address_id, user=request.user)
-            address.delete()  
-            return redirect('profile_address') 
+            address.delete()
+            messages.success(request, 'آدرس با موفقیت حذف شد.')
+            return redirect('profile_address')
         
         else: 
             form = AddressForm(request.POST)
@@ -91,18 +111,21 @@ def profile_address(request):
                 address = form.save(commit=False)
                 address.user = request.user
                 address.save()
-                return redirect('profile_address') 
+                messages.success(request, 'آدرس با موفقیت اضافه شد.')
+                return redirect('profile_address')
+            else:
+                messages.error(request, 'لطفاً تمامی فیلدها را به درستی پر کنید.')
     else:
         form = AddressForm()
 
     addresses = Address.objects.filter(user=request.user)
-    profile, created = Profile.objects.get_or_create(user=request.user)
 
     return render(request, 'profile-addresses.html', {
         'form': form,
-        'addresses': addresses ,
+        'addresses': addresses,
         'profile': profile,
         'category': Category.objects.all(),
+        'item_count': item_count
     })
 
 @login_required

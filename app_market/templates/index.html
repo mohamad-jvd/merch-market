@@ -72,42 +72,13 @@
                         <li data-target="#main-slider-res" data-slide-to="5"></li>
                     </ol>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <a class="main-slider-slide" href="#">
-                                <img src="{% static '/assets/img/main-slider/slider-responsive/1.jpg' %}" alt=""
-                                    class="img-fluid">
+                        {% for image in banner_images.images %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <a class="main-slider-slide" href="{% url 'app_market:product_list_by_category' image.Category_num %}">
+                                <img src="{{ image.image.url }}" alt="" class="img-fluid">
                             </a>
                         </div>
-                        <div class="carousel-item">
-                            <a class="main-slider-slide" href="#">
-                                <img src="{% static '/assets/img/main-slider/slider-responsive/2.jpg' %}" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                        <div class="carousel-item">
-                            <a class="main-slider-slide" href="#">
-                                <img src="{% static '/assets/img/main-slider/slider-responsive/3.jpg' %}" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                        <div class="carousel-item">
-                            <a class="main-slider-slide" href="#">
-                                <img src="{% static '/assets/img/main-slider/slider-responsive/4.jpg' %}" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                        <div class="carousel-item">
-                            <a class="main-slider-slide" href="#">
-                                <img src="{% static '/assets/img/main-slider/slider-responsive/5.jpg' %}" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                        <div class="carousel-item">
-                            <a class="main-slider-slide" href="#">
-                                <img src="{% static '/assets/img/main-slider/slider-responsive/6.jpg' %}" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
+                        {% endfor %}
                     </div>
                     <a class="carousel-control-prev" href="#main-slider-res" role="button" data-slide="prev">
                         <i class="mdi mdi-chevron-right"></i>
